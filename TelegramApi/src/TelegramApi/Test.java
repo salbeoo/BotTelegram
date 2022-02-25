@@ -5,13 +5,23 @@
  */
 package TelegramApi;
 
+import org.json.*;
+
 /**
  *
  * @author stagno_alberto
  */
 public class Test {
-    
-    public void foo(){
-        System.out.println("ciaoo");
+
+    public void foo() {
+        String jsonString ="{nome: 'mario', messaggi:['ciao','amico']}";
+        JSONObject obj = new JSONObject(jsonString);
+        String name = obj.getString("nome");
+        System.out.println(name);
+        JSONArray arr = obj.getJSONArray("messaggi"); // notice that `"posts": [...]`
+        for (int i = 0; i < arr.length(); i++) {
+            String messaggio = arr.getString(i);
+            System.out.println(messaggio);
+        }
     }
 }
