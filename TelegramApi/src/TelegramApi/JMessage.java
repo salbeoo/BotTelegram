@@ -10,5 +10,29 @@ package TelegramApi;
  * @author stagno_alberto
  */
 public class JMessage {
+    //    public boolean ok;
+//    public ArrayList<JMessage> result;
     
+    public int update_id;
+    
+    public int message_id;
+    
+    public JFrom from;
+    public JChat chat;
+    
+    public int date;
+    public String text;
+
+    public JMessage() {
+    }
+
+    
+    public JMessage(int update_id, int message_id, JFrom from, JChat chat, int date, String text) {
+        this.update_id = update_id;
+        this.message_id = message_id;
+        this.from = from;
+        this.chat = chat;
+        this.date = date;
+        this.text = text;
+    }
 }
