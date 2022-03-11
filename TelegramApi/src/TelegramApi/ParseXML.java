@@ -37,7 +37,7 @@ public class ParseXML {
         document = builder.parse(filename);
         root = (Element) document.getDocumentElement();
 
-        nodelist = root.getElementsByTagName("searchresults ");
+        nodelist = root.getElementsByTagName("searchresults");
         nodelist = ((Element) nodelist.item(1)).getElementsByTagName("place");
 
         List lista = new ArrayList<JPlace>();
