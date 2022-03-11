@@ -83,6 +83,13 @@ public class Comandi {
 
         return listaMessaggi;
     }
+    
+        public JMessage lastMessage() throws IOException {
+        ArrayList<JMessage> listaMessaggi = getUpdates("https://api.telegram.org/bot5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/getUpdates");
+        
+        return listaMessaggi.get(listaMessaggi.size()-1);
+
+    }
 
     public void sendMessage(int idDestinatario, String testo) throws MalformedURLException, IOException {
         String url="https://api.telegram.org/bot5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/sendMessage?";
