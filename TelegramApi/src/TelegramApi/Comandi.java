@@ -19,7 +19,7 @@ import org.json.*;
  *
  * @author stagno_alberto
  */
-public class Test {
+public class Comandi {
 
     public void foo() {
         String jsonString = "{nome: 'mario', messaggi:['ciao','amico']}";
