@@ -24,7 +24,7 @@ public class OpenStreetMap {
 
     public JPlace cercaPaese(String paese) throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
         List<JPlace> lista = new ArrayList<JPlace>();
-        String queri = "https://nominatim.openstreetmap.org/search?q" + URLEncoder.encode(paese, "UTF-8") + "&format=xml&addressdetails=1";
+        String queri = "https://nominatim.openstreetmap.org/search?q=" + URLEncoder.encode(paese, "UTF-8") + "&format=xml&addressdetails=1";
 
         URL fileUrl = new URL(queri);
         Scanner inRemote = new Scanner(fileUrl.openStream());

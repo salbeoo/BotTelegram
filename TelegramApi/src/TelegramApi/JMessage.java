@@ -23,6 +23,7 @@ public class JMessage {
     public int date;
     public String text;
 
+    public String comand;
     public JMessage() {
     }
 

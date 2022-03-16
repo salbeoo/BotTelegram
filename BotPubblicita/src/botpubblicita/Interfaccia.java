@@ -162,6 +162,8 @@ public class Interfaccia extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Interfaccia().setVisible(true);
+                ThreadUpdate update=new ThreadUpdate();
+                update.start();
             }
         });
     }

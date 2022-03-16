@@ -23,9 +23,11 @@ public class JPlace {
     String country;
     String country_code;
     double lat, lon;
+    String display_name;
 
     public JPlace(Node o) {
         Element e = (Element) o;
+        display_name=e.getAttribute("display_name");
         lat = Double.parseDouble(e.getAttribute("lat"));
         lon = Double.parseDouble(e.getAttribute("lon"));
     }

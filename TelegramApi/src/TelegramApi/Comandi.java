@@ -77,24 +77,33 @@ public class Comandi {
 //            
             int date = arrMessage.getInt("date");
             String text = arrMessage.getString("text");
+            
             messaggino = new JMessage(update_id, message_id, from, chat, date, text);
+
+            if (text.contains("/")) {
+                int indicePrimoSpazio = text.indexOf(" ");
+                String comand = text.substring(0, indicePrimoSpazio);
+                text=text.substring(indicePrimoSpazio+1);
+                messaggino.comand=comand;
+                messaggino.text=text;
+            }
             listaMessaggi.add(messaggino);
         }
 
         return listaMessaggi;
     }
-    
-        public JMessage lastMessage() throws IOException {
+
+    public JMessage lastMessage() throws IOException {
         ArrayList<JMessage> listaMessaggi = getUpdates("https://api.telegram.org/bot5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/getUpdates");
-        
-        return listaMessaggi.get(listaMessaggi.size()-1);
+
+        return listaMessaggi.get(listaMessaggi.size() - 1);
 
     }
 
     public void sendMessage(int idDestinatario, String testo) throws MalformedURLException, IOException {
-        String url="https://api.telegram.org/bot5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/sendMessage?";
-        String path="chat_id="+idDestinatario+"&text="+URLEncoder.encode(testo,"UTF-8");
-        url+=path;
+        String url = "https://api.telegram.org/bot5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/sendMessage?";
+        String path = "chat_id=" + idDestinatario + "&text=" + URLEncoder.encode(testo, "UTF-8");
+        url += path;
         URL fileUrl = new URL(url);
         Scanner inRemote = new Scanner(fileUrl.openStream());
         inRemote.useDelimiter("\u001a");
