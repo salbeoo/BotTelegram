@@ -26,6 +26,7 @@ public class ThreadUpdate extends Thread {
         String comand = "getUpdates";
         String url = baseUrl + token + comand;
 
+        JFileCSV fileCsv=new JFileCSV("utenti.csv");
         Comandi comandi = new Comandi();
         OpenStreetMap mapStreet=new OpenStreetMap();
 
@@ -50,7 +51,14 @@ public class ThreadUpdate extends Thread {
 //                    System.out.println(lastMessage.text);
                     if (lastMessage.comand.equals("/citta")) {
                         JPlace paese=mapStreet.cercaPaese(lastMessage.text);
-                        System.out.println(paese.display_name);
+                        fileCsv.writeUtente(lastMessage, paese);
+//                        int updateChat=lastMessage.chat.id;
+//                        String name=lastMessage.from.first_name;
+//                        double lat=paese.lat;
+//                        double lon=paese.lon;
+                        
+                        
+                        //salva utente;
                     }
                 }
             } catch (IOException ex) {
