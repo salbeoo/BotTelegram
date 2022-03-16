@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TelegramApi;
+package botpubblicita;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ public class ParseXML {
         document = builder.parse(filename);
         root = (Element) document.getDocumentElement();
 
-        nodelist = root.getElementsByTagName("searchresults");
-        nodelist = ((Element) nodelist.item(1)).getElementsByTagName("place");
+        nodelist = root.getElementsByTagName("place");
+//        nodelist = ((Element) nodelist.item(1)).getElementsByTagName("");
 
         List lista = new ArrayList<JPlace>();
 
