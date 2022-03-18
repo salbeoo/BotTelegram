@@ -76,18 +76,25 @@ public class Comandi {
             chat = new JChat(idC, first_nameC, usernameC, type);
 //            
             int date = arrMessage.getInt("date");
-            String text = arrMessage.getString("text");
-            
-            messaggino = new JMessage(update_id, message_id, from, chat, date, text);
+            if (arrMessage.has("text")) {
+                String text = arrMessage.getString("text");
 
-            if (text.contains("/")) {
-                int indicePrimoSpazio = text.indexOf(" ");
-                String comand = text.substring(0, indicePrimoSpazio);
-                text=text.substring(indicePrimoSpazio+1);
-                messaggino.comand=comand;
-                messaggino.text=text;
+                messaggino = new JMessage(update_id, message_id, from, chat, date, text);
+
+                if (text.contains("/")) {
+                    int indicePrimoSpazio = text.indexOf(" ");
+                    if (indicePrimoSpazio != -1) {
+                        String comand = text.substring(0, indicePrimoSpazio);
+                        text = text.substring(indicePrimoSpazio + 1);
+                        messaggino.comand = comand;
+                        messaggino.text = text;
+                        listaMessaggi.add(messaggino);
+                    }
+                }
+            } else {
+                
             }
-            listaMessaggi.add(messaggino);
+
         }
 
         return listaMessaggi;

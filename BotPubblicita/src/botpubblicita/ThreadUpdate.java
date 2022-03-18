@@ -52,6 +52,7 @@ public class ThreadUpdate extends Thread {
                     if (lastMessage.comand.equals("/citta")) {
                         JPlace paese=mapStreet.cercaPaese(lastMessage.text);
                         fileCsv.writeUtente(lastMessage, paese);
+                        comandi.sendMessage(lastMessage.from.id, "Registrato");
 //                        int updateChat=lastMessage.chat.id;
 //                        String name=lastMessage.from.first_name;
 //                        double lat=paese.lat;

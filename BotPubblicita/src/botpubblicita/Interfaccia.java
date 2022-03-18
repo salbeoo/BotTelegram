@@ -13,6 +13,9 @@ import TelegramApi.Comandi;
  */
 public class Interfaccia extends javax.swing.JFrame {
 
+    ThreadUpdate update = new ThreadUpdate();
+    ThreadSend send = new ThreadSend();
+
     final String baseUrl = "https://api.telegram.org/bot";
     final String token = "5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/";
     String comand = "getUpdates";
@@ -26,6 +29,8 @@ public class Interfaccia extends javax.swing.JFrame {
      */
     public Interfaccia() {
         initComponents();
+        update.start();
+        send.start();
     }
 
     /**
@@ -129,6 +134,8 @@ public class Interfaccia extends javax.swing.JFrame {
 
     private void jBtnInviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnInviaActionPerformed
         // TODO add your handling code here:
+        JPubblicita pubblicita = new JPubblicita(jTxtNomePubblicita.getText(), jTxtDescrizione.getText(), jTxtCitta.getText(), ((int) jSpinner1.getValue()));
+        send.lastPubblicita = pubblicita;
     }//GEN-LAST:event_jBtnInviaActionPerformed
 
     /**
@@ -162,10 +169,10 @@ public class Interfaccia extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Interfaccia().setVisible(true);
-                ThreadUpdate update=new ThreadUpdate();
-                update.start();
+
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
