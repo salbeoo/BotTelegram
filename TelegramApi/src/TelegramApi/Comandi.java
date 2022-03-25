@@ -21,6 +21,9 @@ import org.json.*;
  */
 public class Comandi {
 
+    final String baseUrl = "https://api.telegram.org/bot";
+    final String token = "5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/";
+
     public void foo() {
         String jsonString = "{nome: 'mario', messaggi:['ciao','amico']}";
         JSONObject obj = new JSONObject(jsonString);
@@ -91,8 +94,11 @@ public class Comandi {
                         listaMessaggi.add(messaggino);
                     }
                 }
-            } else {
-                
+            } else if (arrMessage.has("location")) {
+                double lat = arrMessage.getJSONObject("location").getDouble("latitude");
+                double lon = arrMessage.getJSONObject("location").getDouble("longitude");
+                messaggino = new JMessage(update_id, message_id, from, chat, date, lat, lon);
+                listaMessaggi.add(messaggino);
             }
 
         }
@@ -100,8 +106,8 @@ public class Comandi {
         return listaMessaggi;
     }
 
-    public JMessage lastMessage() throws IOException {
-        ArrayList<JMessage> listaMessaggi = getUpdates("https://api.telegram.org/bot5211721482:AAHYppsVKlrRTeUbIRjqlfTWzYXYCac6-KU/getUpdates");
+    public JMessage lastMessage(String json) throws IOException {
+        ArrayList<JMessage> listaMessaggi = getUpdates(json);
 
         return listaMessaggi.get(listaMessaggi.size() - 1);
 

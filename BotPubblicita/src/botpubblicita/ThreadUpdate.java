@@ -26,14 +26,14 @@ public class ThreadUpdate extends Thread {
         String comand = "getUpdates";
         String url = baseUrl + token + comand;
 
-        JFileCSV fileCsv=new JFileCSV("utenti.csv");
+        JFileCSV fileCsv = new JFileCSV("utenti.csv");
         Comandi comandi = new Comandi();
-        OpenStreetMap mapStreet=new OpenStreetMap();
+        OpenStreetMap mapStreet = new OpenStreetMap();
 
         JMessage lastMessage;
         int lastUpdateId = 0;
         try {
-            lastUpdateId = comandi.lastMessage().update_id;
+            lastUpdateId = comandi.lastMessage(url).update_id;
         } catch (IOException ex) {
             Logger.getLogger(ThreadUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,7 +42,7 @@ public class ThreadUpdate extends Thread {
 
             try {
                 Thread.sleep(1500);
-                lastMessage = comandi.lastMessage();
+                lastMessage = comandi.lastMessage(url);
                 int newUpdateId = lastMessage.update_id;
                 if (lastUpdateId != newUpdateId) {
                     lastUpdateId = newUpdateId;
@@ -50,16 +50,19 @@ public class ThreadUpdate extends Thread {
 //                    System.out.println(lastMessage.comand);
 //                    System.out.println(lastMessage.text);
                     if (lastMessage.comand.equals("/citta")) {
-                        JPlace paese=mapStreet.cercaPaese(lastMessage.text);
+                        JPlace paese = mapStreet.cercaPaese(lastMessage.text);
                         fileCsv.writeUtente(lastMessage, paese);
                         comandi.sendMessage(lastMessage.from.id, "Registrato");
 //                        int updateChat=lastMessage.chat.id;
 //                        String name=lastMessage.from.first_name;
 //                        double lat=paese.lat;
 //                        double lon=paese.lon;
-                        
-                        
+
                         //salva utente;
+                    } else if (lastMessage.lat != -1 && lastMessage.lon != -1) {
+                        JPlace paese = new JPlace(lastMessage.lat,lastMessage.lon);
+                        fileCsv.writeUtente(lastMessage, paese);
+                        comandi.sendMessage(lastMessage.from.id, "Registrato");
                     }
                 }
             } catch (IOException ex) {
