@@ -38,13 +38,20 @@ public class ParseXML {
         root = (Element) document.getDocumentElement();
 
         nodelist = root.getElementsByTagName("place");
-//        nodelist = ((Element) nodelist.item(1)).getElementsByTagName("");
-
+        
+//        nodelist = ((Element)nodelist.item(0)).getChildNodes();
+        
+//        for(int i=0;i<nodelist.getLength();i++){
+//            System.out.print(nodelist.item(i).getNodeName()+" - ");
+//            System.out.println(nodelist.item(i).getTextContent());
+//            
+//        }
         List lista = new ArrayList<JPlace>();
 
         for (int i = 0; i < nodelist.getLength(); i++) {
 //            System.out.println(parseObject(nodelist.item(i)));
-            JPlace place=new JPlace(nodelist.item(i));
+            
+            JPlace place = new JPlace(nodelist.item(i));
             lista.add(place);
         }
 
