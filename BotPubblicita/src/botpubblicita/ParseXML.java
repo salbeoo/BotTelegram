@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
  */
 public class ParseXML {
 
-    public List parseCitta(String filename) throws ParserConfigurationException, SAXException, IOException {
+    public List parseCitta(String filename) throws ParserConfigurationException, SAXException, IOException { //metto url o posizione file
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
         Element root, element;

@@ -38,6 +38,7 @@ public class OpenStreetMap {
 
         ParseXML validation = new ParseXML();
         lista=validation.parseCitta("out.xml");
+        //posso usare il link o creare il film e passare nome file
         
         return lista.get(0);
     }
