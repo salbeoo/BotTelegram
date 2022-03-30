@@ -7,6 +7,7 @@ package botpubblicita;
 
 import TelegramApi.JMessage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,12 +19,16 @@ import java.util.List;
  *
  * @author Alber
  */
-public class JFileCSV {
+public class JFile {
 
     String fileName = "";
 
-    public JFileCSV(String fileName) {
+    public JFile(String fileName) throws IOException {
         this.fileName = fileName;
+        File f= new File(fileName);
+        if(!f.exists())
+            f.createNewFile();
+        
     }
 
     public List<JUtente> getListaUtenti() throws FileNotFoundException, IOException {
@@ -65,6 +70,18 @@ public class JFileCSV {
             }
         }
         return -1;
+    }
+
+    public void write(String text) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+        fw.write(text);
+        fw.close();
+    }
+
+    public void append(String text) throws IOException {
+        FileWriter fw = new FileWriter(fileName, true);
+        fw.append(text);
+        fw.close();
     }
 
 }

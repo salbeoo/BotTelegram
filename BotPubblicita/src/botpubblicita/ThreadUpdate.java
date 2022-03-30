@@ -26,7 +26,12 @@ public class ThreadUpdate extends Thread {
         String comand = "getUpdates";
         String url = baseUrl + token + comand;
 
-        JFileCSV fileCsv = new JFileCSV("utenti.csv");
+        JFile fileCsv = null;
+        try {
+            fileCsv = new JFile("utenti.csv");
+        } catch (IOException ex) {
+            Logger.getLogger(ThreadUpdate.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Comandi comandi = new Comandi();
         OpenStreetMap mapStreet = new OpenStreetMap();
 
