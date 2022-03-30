@@ -36,7 +36,7 @@ public class Comandi {
         }
     }
 
-    public ArrayList<JMessage> getUpdates(String jsonS) throws IOException {
+    public ArrayList<JMessage> getUpdates(String jsonS) throws IOException {  //se inizia con le graffe
 
         ArrayList<JMessage> listaMessaggi = new ArrayList<JMessage>();
 
@@ -135,5 +135,74 @@ public class Comandi {
         wr.write(content);
         wr.close();
         inRemote.close();
+    }
+    public ArrayList<JMessage> getUpdatess(String jsonS) throws IOException { //se inizia con quadra
+
+        ArrayList<JMessage> listaMessaggi = new ArrayList<JMessage>();
+
+        URL fileUrl = new URL(jsonS);
+        Scanner inRemote = new Scanner(fileUrl.openStream());
+        inRemote.useDelimiter("\u001a");
+
+        String content = inRemote.next();
+
+        String jsonString = content;
+//        JSONObject obj = new JSONObject(jsonString);
+        JSONArray arr=new JSONArray(jsonString);
+        JMessage messaggino;
+        JFrom from;
+        JChat chat;
+
+//        JSONArray arr = array.getJSONArray("result"); // notice that `"posts": [...]`
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject messaggio = arr.getJSONObject(i);
+
+            int update_id = messaggio.getInt("update_id");
+
+//            JSONObject message=arr.getJSONObject(1);
+            JSONObject arrMessage = messaggio.getJSONObject("message");
+            int message_id = arrMessage.getInt("message_id");
+
+            JSONObject arrFrom = arrMessage.getJSONObject("from");
+            int id = arrFrom.getInt("id");
+            boolean is_bot = arrFrom.getBoolean("is_bot");
+            String first_name = arrFrom.getString("first_name");
+            String username = arrFrom.getString("username");
+            String language_code = arrFrom.getString("language_code");
+            from = new JFrom(id, is_bot, first_name, username, language_code);
+//            
+            JSONObject arrChat = arrMessage.getJSONObject("chat");
+            int idC = arrChat.getInt("id");
+            String first_nameC = arrChat.getString("first_name");
+            String usernameC = arrChat.getString("username");
+            String type = arrChat.getString("type");
+            chat = new JChat(idC, first_nameC, usernameC, type);
+//            
+            int date = arrMessage.getInt("date");
+            if (arrMessage.has("text")) {
+                String text = arrMessage.getString("text");
+
+                messaggino = new JMessage(update_id, message_id, from, chat, date, text);
+
+                if (text.contains("/")) {
+                    int indicePrimoSpazio = text.indexOf(" ");
+                    if (indicePrimoSpazio != -1) {
+                        String comand = text.substring(0, indicePrimoSpazio);
+                        text = text.substring(indicePrimoSpazio + 1);
+                        messaggino.comand = comand;
+                        messaggino.text = text;
+                        listaMessaggi.add(messaggino);
+                    }
+                }
+            } else if (arrMessage.has("location")) {
+                double lat = arrMessage.getJSONObject("location").getDouble("latitude");
+                double lon = arrMessage.getJSONObject("location").getDouble("longitude");
+                messaggino = new JMessage(update_id, message_id, from, chat, date, lat, lon);
+                listaMessaggi.add(messaggino);
+            }
+
+        }
+
+        return listaMessaggi;
     }
 }
